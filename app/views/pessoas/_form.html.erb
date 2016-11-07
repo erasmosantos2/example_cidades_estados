@@ -1,0 +1,33 @@
+<%= form_for(@pessoa) do |f| %>
+  <% if @pessoa.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pessoa.errors.count, "error") %> prohibited this pessoa from being saved:</h2>
+
+      <ul>
+      <% @pessoa.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nome %><br>
+    <%= f.text_field :nome %>
+  </div>
+
+  <div class="field">
+    <%= label_tag :estado %>
+    <%= collection_select(:estado, :id, @estados, :id, :nome, { prompt: "Selecione o estado"}, {id: 'estados_select'})  %>
+    
+  </div>
+  <div class="field">
+    <%= f.label :cidade_id %>
+    <%= f.select :cidade_id, options_for_select(@cidades.collect { |cidade|
+    [cidade.nome.titleize, cidade.id] }, 0), {}, { id: 'cidades_select'} %>    
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
